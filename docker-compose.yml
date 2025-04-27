@@ -1,0 +1,47 @@
+version: '3'
+services:
+  # Mongo 服务
+  mongo: 
+    image: mongo:4.4
+    container_name: blog-mongo
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - blog-network
+    restart: always
+
+  # 后端API服务
+  backend:
+    build: ./backend
+    container_name: blog-backend
+    depends_on:
+      - mongo
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/blog
+      - JWT_SECRET=your_jwt_secret_key_here
+    volumes:
+      - ./backend/uploads:/app/uploads
+    networks:
+      - blog-network
+    restart: always
+
+  # 前端服务
+  frontend:
+    build: ./frontend
+    container_name: blog-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - blog-network
+    restart: always
+
+# 数据卷
+volumes:
+  mongo-data:
+
+networks:
+  blog-network:
+    driver: bridge
