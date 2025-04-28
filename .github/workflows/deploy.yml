@@ -47,5 +47,5 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.PROJECT_PATH }} && git pull && docker-compose down && docker-compose up --build -d"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.PROJECT_PATH }} && git pull git@github.com:popipobi/hamburger-blog.git && docker-compose down && docker-compose up --build -d"
 

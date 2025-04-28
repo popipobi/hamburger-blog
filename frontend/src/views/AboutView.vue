@@ -9,7 +9,7 @@
                         <v-avatar size="150" class="mb-4">
                             <v-img src="https://via.placeholder.com/150" alt="我的头像"></v-img>
                         </v-avatar>
-                        <h2 class="text-h4">无敌汉堡包</h2>
+                        <h2 class="text-h4">好吃汉堡包</h2>
                         <p class="text-subtitle-1 text-grey">写毫无营养代码的</p>
                     </div>
 
