@@ -22,6 +22,7 @@
                             prepend-icon="mdi-account"
                             :rules="[v => !!v || '用户名不能为空']"
                             required
+                            class="equal-width-field"
                         ></v-text-field>
 
                         <v-text-field
@@ -33,6 +34,7 @@
                                 v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || '请输入有效的邮箱地址'
                             ]"
                             required
+                            class="equal-width-field"
                         ></v-text-field>
 
                         <v-text-field
@@ -58,6 +60,7 @@
                                 v => v === password || '两次输入的密码不一致'
                             ]"
                             required
+                            class="equal-width-field"
                         ></v-text-field>
 
                         <v-btn
@@ -74,7 +77,7 @@
                             已有账号？
                             <router-link to="/login">去登录</router-link>
                         </div>
-                    ></v-form>
+                    </v-form>
                 </v-card>
             </v-col>
         </v-row>
@@ -127,3 +130,9 @@ export default {
 }
 
 </script>
+
+<style>
+.equal-width-field {
+    width: calc(100% - 40px);
+}
+</style>
