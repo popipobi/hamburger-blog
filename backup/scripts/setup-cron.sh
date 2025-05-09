@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# 设置非交互模式
+export DEBIAN_FRONTEND=noninteractive
+
 # 安装cron
-apt-get update && apt-get -y install cron
+apt-get update 
+apt-get install -y cron curl gnupg mongodb-database-tools tzdata
+
+# 设置时区
+ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
 
 # 创建crontab文件
 cat > /tmp/crontab << EOF

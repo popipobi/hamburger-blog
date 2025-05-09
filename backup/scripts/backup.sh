@@ -7,13 +7,16 @@ BACKUP_FILENAME="blog_backup_$DATE.gz"
 MONGODB_URI="mongodb://mongo:27017/blog"
 RETENTION_DAYS=7
 
+mkdir -p $BACKUP_DIR
+
 # 创建备份
-echo "开始备份MongoDB数据..."
+echo "开始备份MongoDB数据...$(date)"
 mongodump --uri="$MONGODB_URI" --archive="$BACKUP_DIR/$BACKUP_FILENAME" --gzip
 
 # 检查备份是否成功
 if [ $? -eq 0 ]; then
     echo "ok 备份成功: $BACKUP_FILENAME"
+    echo "文件大小: $(du -h $BACKUP_DIR/$BACKUP_FILENAME | cut -f1)"
 else
     echo "no 备份失败"
     exit 1

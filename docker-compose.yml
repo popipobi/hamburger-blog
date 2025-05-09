@@ -45,7 +45,7 @@ services:
 
   # 备份服务
   backup:
-    image: mongo:4.4
+    image: ubuntu:20.04
     container_name: blog-backup
     depends_on:
       - mongo
