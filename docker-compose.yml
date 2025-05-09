@@ -6,6 +6,7 @@ services:
     container_name: blog-mongo
     volumes:
       - mongo-data:/data/db
+      - ./backup/data:/backup
     networks:
       - blog-network
     restart: always
@@ -39,20 +40,6 @@ services:
     # volumes:
     #   - ./ssl:/etc/nginx/ssl
     #   - /etc/letsencrypt:/etc/letsencrypt
-    networks:
-      - blog-network
-    restart: always
-
-  # 备份服务
-  backup:
-    image: ubuntu:20.04
-    container_name: blog-backup
-    depends_on:
-      - mongo
-    volumes:
-      - ./backup/scripts:/app/backup/scripts
-      - ./backup/data:/app/backup/data
-    command: bash -c "chmod +x /app/backup/scripts/*.sh && /app/backup/scripts/setup-cron.sh"
     networks:
       - blog-network
     restart: always

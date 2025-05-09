@@ -3,19 +3,19 @@
 case "$1" in
   backup)
     echo "执行手动备份..."
-    docker exec blog-backup /app/backup/scripts/backup.sh
+    bash backup/scripts/backup.sh
     ;;
   restore)
     if [ -z "$2" ]; then
       echo "请指定备份文件名，可用备份:"
-      docker exec blog-backup ls -la /app/backup/data | grep -v "backup.log"
+      ls -la backup/data | grep -v "backup.log"
     else
-      docker exec -it blog-backup /app/backup/scripts/restore.sh "$2"
+      bash backup/scripts/restore.sh "$2"
     fi
     ;;
   list)
     echo "可用备份:"
-    docker exec blog-backup ls -la /app/backup/data | grep -v "backup.log"
+    ls -la backup/data | grep -v "backup.log"
     ;;
   *)
     echo "使用方法: $0 {backup|restore|list}"

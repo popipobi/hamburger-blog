@@ -9,7 +9,6 @@ if [ $# -eq 0 ]; then
 fi
 
 BACKUP_FILE="/app/backup/data/$1"
-MONGODB_URI="mongodb://mongo:27017/blog"
 
 # 检查备份文件是否存在
 if [ ! -f "BACKUP_FILE" ]; then
@@ -20,7 +19,6 @@ fi
 # 确认恢复操作
 echo "警告！这将覆盖当前数据库内容！"
 echo "备份文件: $BACKUP_FILE"
-echo "MongoDB URI: $MONGODB_URI"
 read -p "确认要继续吗？(y/n)" confirm
 
 if [ "$confirm" != "y" ]; then
@@ -30,7 +28,9 @@ fi
 
 # 执行恢复
 echo "开始从 $BACKUP_FILE 恢复数据..."
-mongorestore --uri="$MONGODB_URI" --gzip --archive="$BACKUP_FILE" --drop
+docker cp "$BACKUP_FILE" blog-mongo:/tmp/restore.gz
+docker exec blog-mongo mongorestore --uri="mongodb://localhost:27017/blog" --gzip --archive="/tmp/restore.gz" --drop
+docker exec blog-mongo rm /tmp/restore.gz
 
 # 检查恢复是否成功
 if [ $? -eq 0 ]; then
