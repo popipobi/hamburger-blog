@@ -13,7 +13,7 @@ fi
 BACKUP_FILE="$BACKUP_DIR/$1"
 
 # 检查备份文件是否存在
-if [ ! -f "BACKUP_FILE" ]; then
+if [ ! -f "$BACKUP_FILE" ]; then
     echo "no 备份文件不存在: $BACKUP_FILE"
     exit 1
 fi

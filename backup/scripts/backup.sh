@@ -17,14 +17,6 @@ docker exec blog-mongo rm /tmp/$BACKUP_FILENAME
 
 # 权限
 if [ -f "$BACKUP_DIR/$BACKUP_FILENAME" ]; then
-    # 获取当前用户和组
-    CURRENT_USER=$(whoami)
-    CURRENT_GROUP=$(id -gn)
-
-    # 更改备份文件所有权
-    sudo chown chown $CURRENT_USER:$CURRENT_GROUP $BACKUP_DIR/$BACKUP_FILENAME
-    sudo chmod 644 $BACKUP_DIR/$BACKUP_FILENAME
-
     echo "ok 备份成功: $BACKUP_FILENAME"
     echo "文件大小: $(du -h $BACKUP_DIR/$BACKUP_FILENAME | cut -f1)"
 else
