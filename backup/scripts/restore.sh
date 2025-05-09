@@ -1,14 +1,16 @@
 #!/bin/bash
 
+BACKUP_DIR="./backup/data"
+
 # 检查是否提供了备份文件参数
 if [ $# -eq 0 ]; then
     echo "使用方法: $0 <备份文件名>"
     echo "可用备份:"
-    ls -la /app/backup/data
+    ls -la $BACKUP_DIR
     exit 1
 fi
 
-BACKUP_FILE="./backup/data/$1"
+BACKUP_FILE="$BACKUP_DIR/$1"
 
 # 检查备份文件是否存在
 if [ ! -f "BACKUP_FILE" ]; then

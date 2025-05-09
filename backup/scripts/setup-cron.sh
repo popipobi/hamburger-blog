@@ -11,11 +11,14 @@ apt-get install -y cron curl gnupg mongodb-database-tools tzdata
 ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 
+# 获取当前目录
+CURRENT_DIR=$(pwd)
+
 # 创建crontab文件
 cat > /tmp/crontab << EOF
 
 # 每天大半夜三点钟执行备份
-0 3 * * * /app/backup/scripts/backup.sh >> /app/backup/data/backup.log 2>&1
+0 3 * * * $CURRENT_DIR >> && ./backup/scripts/backup.sh >> ./backup/data/backup.log 2>&1
 EOF
 
 # 安装crontab
