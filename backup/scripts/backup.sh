@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 备份配置
-BACKUP_DIR="/app/backup/data"
+BACKUP_DIR="./backup/data"
 DATE=$(date +"%Y%m%d_%H%M%S")
 BACKUP_FILENAME="blog_backup_$DATE.gz"
 RETENTION_DAYS=7

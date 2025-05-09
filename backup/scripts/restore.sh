@@ -8,7 +8,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-BACKUP_FILE="/app/backup/data/$1"
+BACKUP_FILE="./backup/data/$1"
 
 # 检查备份文件是否存在
 if [ ! -f "BACKUP_FILE" ]; then
