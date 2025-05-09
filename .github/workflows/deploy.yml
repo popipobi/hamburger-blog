@@ -45,7 +45,14 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to server
+      - name: Deploy to server and make scripts executable
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.PROJECT_PATH }} && git pull git@github.com:popipobi/hamburger-blog.git && docker-compose down && docker-compose up --build -d"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.PROJECT_PATH }} && \
+          git pull git@github.com:popipobi/hamburger-blog.git && \
+          chmod +x deploy.sh && \
+          chmod +x manage-backup.sh && \
+          chmod +x backup/scripts/*.sh && \
+          docker-compose down && \
+          docker-compose up --build -d"
+
 
