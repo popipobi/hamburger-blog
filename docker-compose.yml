@@ -43,6 +43,20 @@ services:
       - blog-network
     restart: always
 
+  # 备份服务
+  backup:
+    image: mongo:4.4
+    container_name: blog-backup
+    depends_on:
+      - mongo
+    volumes:
+      - ./backup/scripts:/app/backup/scripts
+      - ./backup/data:/app/backup/data
+    entrypoint: ["/app/backup/scripts/setup-cron.sh"]
+    networks:
+      - blog-network
+    restart: always
+
 # 数据卷
 volumes:
   mongo-data:
