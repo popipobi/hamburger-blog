@@ -48,7 +48,8 @@ jobs:
       - name: Deploy to server and make scripts executable
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "cd ${{ secrets.PROJECT_PATH }} && \
-          git pull git@github.com:popipobi/hamburger-blog.git && \
+          git fetch && \
+          git reset --hard origin/master && \
           chmod +x deploy.sh && \
           chmod +x manage-backup.sh && \
           chmod +x backup/scripts/*.sh && \
