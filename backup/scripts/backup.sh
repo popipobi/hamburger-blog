@@ -7,7 +7,6 @@ BACKUP_FILENAME="blog_backup_$DATE.gz"
 RETENTION_DAYS=7
 
 mkdir -p $BACKUP_DIR
-chmod 777 $BACKUP_DIR
 
 # 创建备份
 echo "开始备份MongoDB数据...$(date)"
@@ -16,10 +15,16 @@ docker exec blog-mongo mongodump --uri="mongodb://localhost:27017/blog" --archiv
 docker cp blog-mongo:/tmp/$BACKUP_FILENAME $BACKUP_DIR/
 docker exec blog-mongo rm /tmp/$BACKUP_FILENAME
 
-chmod 644 $BACKUP_DIR/$BACKUP_FILENAME
-
-# 检查备份是否成功
+# 权限
 if [ -f "$BACKUP_DIR/$BACKUP_FILENAME" ]; then
+    # 获取当前用户和组
+    CURRENT_USER=$(whoami)
+    CURRENT_GROUP=$(id -gn)
+
+    # 更改备份文件所有权
+    sudo chown chown $CURRENT_USER:$CURRENT_GROUP $BACKUP_DIR/$BACKUP_FILENAME
+    sudo chmod 644 $BACKUP_DIR/$BACKUP_FILENAME
+
     echo "ok 备份成功: $BACKUP_FILENAME"
     echo "文件大小: $(du -h $BACKUP_DIR/$BACKUP_FILENAME | cut -f1)"
 else
