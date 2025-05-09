@@ -52,7 +52,7 @@ services:
     volumes:
       - ./backup/scripts:/app/backup/scripts
       - ./backup/data:/app/backup/data
-    entrypoint: ["/app/backup/scripts/setup-cron.sh"]
+    command: bash -c "chmod +x /app/backup/scripts/*.sh && /app/backup/scripts/setup-cron.sh"
     networks:
       - blog-network
     restart: always
