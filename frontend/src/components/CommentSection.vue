@@ -5,7 +5,7 @@
 
     <!-- 评论表单 -->
     <v-card class="mb-6 pa-4" v-if="isLoggedIn">
-      <v-form @submit.prevent="submitCommit" ref="commentForm">
+      <v-form @submit.prevent="submitComment" ref="commentForm">
         <v-textarea
           v-model="newComment.content"
           label="发表评论"
@@ -149,7 +149,7 @@
                   <v-btn
                     color="primary"
                     type="submit"
-                    :loading="CustomElementRegistry.updating"
+                    :loading="comment.updating"
                     :disabled="comment.updating || !comment.editContent"
                   >
                     保存
@@ -181,7 +181,7 @@
                     {{ reply.author.username }}
                   </div>
                   <div class="text-caption grey--text">
-                    {{ formateDate(reply.createdAt) }}
+                    {{ formatDate(reply.createdAt) }}
                   </div>
                 </div>
                 <div class="comment-content my-1">
@@ -198,7 +198,7 @@
                     color="red"
                     class="ml-2"
                     v-if="canModifyComment(reply)"
-                    @click="delteComment(reply._id)"
+                    @click="deleteComment(reply._id)"
                   >
                     <v-icon small class="mr-1">mdi-delete</v-icon>
                     删除
@@ -302,7 +302,7 @@ export default {
     },
 
     replyTo(comment) {
-      this.replyingTo = commit;
+      this.replyingTo = comment;
       this.newReply.content = '',
       if (this.$refs.replyForm) {
         this.$refs.replyForm.resetValidation();
@@ -311,7 +311,7 @@ export default {
       this.$nextTick(() => {
         const replyForm = document.querySelector('.comment-section .v-card:nth-child(2)');
         if (replyForm) {
-          replyForm.scrollInfoView({ behavior: 'smooth' });
+          replyForm.scrollIntoView({ behavior: 'smooth' });
         }
       });
     },
