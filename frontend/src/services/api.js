@@ -43,6 +43,14 @@ export const articleAPI = {
     delete: (id) => api.delete(`/articles/${id}`)
 };
 
+// 评论API
+export const commentAPI = {
+    getByArticle: (articleId) => api.get(`/comments/article/${articleId}`),
+    create: (articleId, commentData) => api.post(`/comments/article/${articleId}`, commentData),
+    update: (commentId, commentData) => api.put(`/comments/${commentId}`, commentData),
+    delete: (commentId) => api.delete(`/comments/${commentId}`)
+};
+
 // 上传API
 export const uploadAPI = {
     uploadImage: (formData) => {

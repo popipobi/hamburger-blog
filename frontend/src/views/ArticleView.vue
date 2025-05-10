@@ -54,6 +54,12 @@
           </v-btn>
           </div>
 
+          <!-- 添加评论部分 -->
+          <v-divider class="my-6"></v-divider>
+          <comment-section
+            v-if="article._id"
+            :article-id="article._id"
+          ></comment-section>
         </v-col>
       </v-row>
     </div>
@@ -65,6 +71,7 @@ import { marked } from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import { articleAPI } from '@/services/api'
+import CommentSection from '@/componets/CommentSection.vue'
 
 // 配置marked使用highlight.js高亮代码
 marked.setOptions({
@@ -75,6 +82,9 @@ marked.setOptions({
 
 export default {
   name: 'ArticleView',
+  componets: {
+    CommentSection
+  },
   data() {
     return {
       article: {},
@@ -90,8 +100,9 @@ export default {
       if (!this.$store.state.isLoggedIn || !this.article.author) return false;
 
       const userId = this.$store.state.user?.id;
-      return userId === this.article.author._id ||
-        uerId === this.article.author.id ||
+      const authorId = this.article.author._id || this.article.author.id;
+
+      return userId === authorId ||
         this.$store.state.user?.role === 'admin';
     }
   },

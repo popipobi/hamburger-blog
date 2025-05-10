@@ -21,6 +21,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // 路由
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/articles', require('./routes/articleRoutes'));
+app.use('/api/comments', require('./routes/commentRoutes'));
 
 // 添加上传路由
 app.use('/api/upload', require('./routes/uploadRoutes'));

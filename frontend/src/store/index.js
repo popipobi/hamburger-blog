@@ -5,6 +5,12 @@ export default createStore({
     isLoggedIn: !!localStorage.getItem('token'),
     token: localStorage.getItem('token') || null,
     user: JSON.parse(localStorage.getItem('user')) || null
+    // 添加snack状态
+    snackbar: {
+      show: false,
+      text: '',
+      color: 'success'
+    }
   },
   mutations: {
     login(state, { token, user }) {
@@ -22,9 +28,17 @@ export default createStore({
       // 从localStorage移除
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+    },
+    setSnackbar(state, { show, text, color }) {
+      state.snackbar.show = show
+      state.snackbar.text = text
+      state.snackbar.color = color || 'success'
     }
   },
   actions: {
+    setSnackbar({ commit }, payload) {
+      commit('setSnackbar', payload)
+    }
   },
   modules: {
   }
