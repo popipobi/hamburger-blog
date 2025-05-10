@@ -76,7 +76,7 @@ exports.createComment = async (req, res) => {
     const populatedComment = await Comment.findById(newComment._id)
       .populate('author', 'username avatar');
     
-    res.status(201).json(populateComment);
+    res.status(201).json(populatedComment);
   } catch (error) {
     console.error('创建评论失败:', error);
     res.status(500).json({ message: '服务器错误', error: error.message });
