@@ -82,7 +82,7 @@ marked.setOptions({
 
 export default {
   name: 'ArticleView',
-  componets: {
+  components: {
     CommentSection
   },
   data() {
