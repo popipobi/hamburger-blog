@@ -21,6 +21,7 @@ yarn-error.log*
 # 上传文件
 backend/uploads/*
 !backend/uploads/.gitkeep
+!backend/uploads/avatars/
 
 # Docker数据卷
 data/
