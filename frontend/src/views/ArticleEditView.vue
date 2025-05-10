@@ -2,26 +2,6 @@
     <v-container>
         <h1 class="text-h3 mb-5">{{ isEditing ? '编辑文章' : '创建文章' }}</h1>
 
-        <v-alert
-            v-if="error"
-            type="error"
-            class="mb-4"
-            closable
-            @click:close="error = null"
-        >
-            {{ error }}
-        </v-alert>
-
-        <v-alert
-            v-if="success"
-            type="success"
-            class="mb-4"
-            closable
-            @click:close="success = null"
-        >
-            {{ success }}
-        </v-alert>
-
         <v-form @submit.prevent="saveArticle" ref="form">
             <v-card class="pa-4 mb-4">
                 <v-text-field
@@ -118,8 +98,6 @@ export default {
             },
             selectedFile: null,
             loading: false,
-            error: null,
-            success: null
         }
     },
     created() {
@@ -146,7 +124,11 @@ export default {
                 this.loading = false;
             } catch (error) {
                 console.error('获取文章失败：', error);
-                this.error = '记载文章失败，请稍后再试';
+                this.$store.dispatch('setSnackbar', {
+                    show: true,
+                    text: '加载文章失败，请稍候再试',
+                    color: 'error'
+                });
                 this.loading = false;
             }
         },
@@ -172,7 +154,11 @@ export default {
                 return response.data.filePath;
             } catch (error) {
                 console.error('上传图片失败详情：', error.response ? error.response.data : error.message);
-                this.error = '上传图片失败：' + (error.response?.data?.message || error.message);
+                this.$store.dispatch('setSnackbar', {
+                    show: true,
+                    text: '上传图片失败：' + (error.response?.data?.message || error.message),
+                    color: 'error'
+                });
                 throw new Error('上传图片失败');
             }
         },
@@ -181,8 +167,6 @@ export default {
             if (!this.$refs.form.validate()) return;
 
             this.loading = true;
-            this.error = null;
-            this.success = null;
 
             try {
                 // 如果有选择新图片，先上传图片
@@ -197,10 +181,18 @@ export default {
                 if (this.isEditing) {
                     // 更新已有文章
                     await articleAPI.update(this.articleId, this.article);
-                    this.success = '文章已更新';
+                    this.$store.dispatch('setSnackbar', {
+                        show: true,
+                        text: '文章已更新',
+                        color: 'success'
+                    });
                 } else {
                     const response = await articleAPI.create(this.article);
-                    this.success = '文章已创建';
+                    this.$store.dispatch('setSnackbar', {
+                        show: true,
+                        text: '文章已创建',
+                        color: 'success'
+                    });
 
                     // 创建成功后跳转到文章页面
                     setTimeout(() => {
@@ -209,7 +201,11 @@ export default {
                 }
             } catch (error) {
                 console.error('保存文章失败：', error);
-                this.error = error.response?.data?.message || '保存文章失败，请稍后再试';
+                this.$store.dispatch('setSnackbar', {
+                    show: true,
+                    text: error.response?.data?.message || '文章保存失败，请稍候再试',
+                    color: 'error'
+                });
             } finally {
                 this.loading = false;
             }
@@ -219,7 +215,11 @@ export default {
             if (path.startsWith('http')) {
                 return path;
             }
-            return `http://localhost:3000${path}`;
+
+            const baseUrl = process.env.NODE_ENV === 'production'
+                ? ''
+                : 'http://localhost:3000'
+            return `${baseUrl}${path}`;
         }
     }
 }
