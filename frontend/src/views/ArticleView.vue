@@ -71,7 +71,7 @@ import { marked } from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 import { articleAPI } from '@/services/api'
-import CommentSection from '@/componets/CommentSection.vue'
+import CommentSection from '@/components/CommentSection.vue'
 
 // 配置marked使用highlight.js高亮代码
 marked.setOptions({
