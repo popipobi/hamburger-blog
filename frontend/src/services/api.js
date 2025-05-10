@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = process.env.NODE_ENV === 'production'
-    ? 'api'
+    ? '/api'
     : 'http://localhost:3000/api';
 
 // 创建axios实例
