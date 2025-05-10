@@ -16,7 +16,7 @@ router.post('/article/:articleId', auth, commentController.createComment);
 // @route   DELETE /api/comments/article/:articleId
 // @desc    删除评论
 // @access  Private
-router.delete('/article/:articleId', auth, commentController.deleteComment);
+router.delete('/:commentId', auth, commentController.deleteComment);
 
 // @route   PUT /api/comments/:commentId
 // @desc    修改评论

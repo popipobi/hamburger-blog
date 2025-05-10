@@ -36,7 +36,7 @@
     <!-- 回复表单 -->
     <v-card class="mb-6 pa-4" v-if="replyingTo">
       <div class="d-flex justify-space-between mb-2">
-        <div class="text-sutitle-1">
+        <div class="text-subtitle-1">
           回复 <b>{{ replyingTo.author.username }}</b>
         </div>
         <v-btn icon small @click="cancelReply">
@@ -103,7 +103,7 @@
                 {{ comment.content }}
               </div>
               <div class="d-flex">
-                <v-btn text x-small color="primary" @click="replyTo(commit)" v-if="isLoggedIn">
+                <v-btn text x-small color="primary" @click="replyTo(comment)" v-if="isLoggedIn">
                   <v-icon small class="mr-1">mdi-reply</v-icon>
                   回复
                 </v-btn>
@@ -177,7 +177,7 @@
               </v-avatar>
               <div class="flex-grow-1">
                 <div class="d-flex justify-space-between">
-                  <div class="text-sutitle-2 font-weight-bold">
+                  <div class="text-subtitle-2 font-weight-bold">
                     {{ reply.author.username }}
                   </div>
                   <div class="text-caption grey--text">
@@ -334,7 +334,7 @@ export default {
           );
 
           // 添加到回复列表
-          const parentIndex = this.comments.findIndex(c => c.id === this.replyingTo._id);
+          const parentIndex = this.comments.findIndex(c => c._id === this.replyingTo._id);
           if (parentIndex !== -1) {
             if (!this.comments[parentIndex].replies) {
               this.$set(this.comments[parentIndex], 'replies', []);
