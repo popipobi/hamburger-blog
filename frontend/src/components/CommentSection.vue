@@ -189,7 +189,7 @@
                 </div>
                 <div class="d-flex">
                   <v-btn text x-small color="primary" @click="replyTo(comment)" v-if="isLoggedIn">
-                    <v-icon samll class="mr-1">mdi-reply</v-icon>
+                    <v-icon small class="mr-1">mdi-reply</v-icon>
                     回复
                   </v-btn>
                   <v-btn
@@ -303,7 +303,7 @@ export default {
 
     replyTo(comment) {
       this.replyingTo = comment;
-      this.newReply.content = '',
+      this.newReply.content = '';
       if (this.$refs.replyForm) {
         this.$refs.replyForm.resetValidation();
       }
@@ -457,7 +457,7 @@ export default {
       } else if (diffHour < 24) {
         return `${diffHour}小时前`;
       } else if (diffDay < 7) {
-        return `${diffDay}天前`；
+        return `${diffDay}天前`;
       } else {
         return date.toLocaleDateString();
       }
