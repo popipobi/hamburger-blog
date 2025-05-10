@@ -4,7 +4,7 @@ export default createStore({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
     token: localStorage.getItem('token') || null,
-    user: JSON.parse(localStorage.getItem('user')) || null
+    user: JSON.parse(localStorage.getItem('user')) || null,
     // 添加snack状态
     snackbar: {
       show: false,
