@@ -42,7 +42,7 @@ exports.getCommentsByArticle = async (req, res) => {
 };
 
 // 创建新评论
-exports.createComment = async (res, req) => {
+exports.createComment = async (req, res) => {
   try {
     const { articleId } = req.params;
     const { content, parentComment } = req.body;
