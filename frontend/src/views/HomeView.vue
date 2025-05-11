@@ -134,7 +134,8 @@ export default {
                 return path;
             }
             // 否则拼接完整的URL
-            return `http://localhost:3000${path}`;
+            // return `http://localhost:3000${path}`;
+            return path;
         }
     }
 }
