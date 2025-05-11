@@ -132,7 +132,8 @@ export default {
       if (path.startsWith('http')) {
         return path;
       }
-      return `http://localhost:3000${path}`;
+      // return `http://localhost:3000${path}`;
+      return path;
     }
   }
 }
