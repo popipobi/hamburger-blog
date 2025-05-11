@@ -1,3 +1,4 @@
+import store from '@/store';
 import axios from 'axios';
 
 const API_URL = process.env.NODE_ENV === 'production'
@@ -25,6 +26,47 @@ api.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+// 处理令牌过期
+api.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        // 令牌过期
+        if (error.response && error.response.status === 401) {
+            // 清除本地存储的令牌和用户信息
+            store.commit('logout');
+
+            // 显示通知
+            if (store.dispatch) {
+                store.dispatch('setSnackbar', {
+                    show: true,
+                    text: '您的登录已过期，请重新登录',
+                    color: 'warning'
+                });
+            }
+
+            // 若不在登录页面，则重定向到登录页面
+            if (router.currentRoute.value.path !== '/login') {
+                router.push('/login');
+            }
+        }
+
+        // 处理网络错误
+        if (!error.response) {
+            if (store.dispatch) {
+                store.dispatch('setSnackbar', {
+                    show: true,
+                    text: '网络错误，请检查您的网络连接',
+                    color: 'error'
+                });
+            }
+        }
+
+        return Promise.reject(error);
+    }
+)
 
 // 用户API
 export const userAPI = {
